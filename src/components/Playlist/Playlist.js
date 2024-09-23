@@ -3,7 +3,7 @@ import TrackList from "../TrackList/TrackList";
 import { FaEdit } from "react-icons/fa"; // Import an edit icon (you'll need react-icons package)
 import styles from "./Playlist.module.css"; // Import the CSS module
 
-function Playlist({ playlistName, playlist, setPlaylistName }) {
+function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist }) {
   // Track if the user is editing the playlist name
   const [isEditing, setIsEditing] = useState(false);
 
@@ -41,7 +41,7 @@ function Playlist({ playlistName, playlist, setPlaylistName }) {
         </div>
       )}
 
-      <TrackList tracks={playlist} showAddButton={false} />
+      <TrackList tracks={playlist} showAddButton={false} removeFromPlaylist={removeFromPlaylist} />
       <button>Save to Spotify</button>
     </div>
   );
