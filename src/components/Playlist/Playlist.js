@@ -37,11 +37,11 @@ function Playlist({ playlistName, playlist, setPlaylistName }) {
           title="Click to edit playlist name" //Tooltip on hover
         >
           <h2 className={styles.editableTitle}>{playlistName}</h2> {/* Click to edit Playlist name */}
-          <FaEdit className={styles.editIcon}/> {/* Edit Icon */}
+          <FaEdit className={styles.editIcon} /> {/* Edit Icon */}
         </div>
       )}
 
-      <TrackList tracks={playlist} />
+      <TrackList tracks={playlist} showAddButton={false} />
       <button>Save to Spotify</button>
     </div>
   );

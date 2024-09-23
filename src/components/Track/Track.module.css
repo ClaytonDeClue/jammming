@@ -1,0 +1,8 @@
+.trackContainer {
+    display: flex;
+    align-items: center;
+}
+
+.addButton {
+    margin-left: 10px;
+}
