@@ -10,14 +10,14 @@ function Track({ track, addToPlaylist, showAddButton, removeFromPlaylist }) {
       {showAddButton ? (
         <button
           onClick={() => addToPlaylist(track)}
-          className={styles.addButton}
+          className={styles.trackButton}
         >
           +
         </button>
       ) : (
         <button
           onClick={() => removeFromPlaylist(track)}
-          className={styles.addButton}
+          className={styles.trackButton}
         >
           -
         </button>
