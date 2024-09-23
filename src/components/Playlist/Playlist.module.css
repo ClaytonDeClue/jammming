@@ -1,0 +1,21 @@
+.editableTitleContainer {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.editableTitleContainer:hover {
+    text-decoration: underline;
+    background-color: #868686;
+}
+
+.editableTitle {
+    margin-right: 10px;
+}
+
+.editIcon {
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+}
