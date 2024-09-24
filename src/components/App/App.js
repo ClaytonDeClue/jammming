@@ -11,18 +11,21 @@ function App() {
       name: "Song 1",
       artist: "Artist 1",
       album: "Album 1",
+      uri: 'spotify:track:1',
     },
     {
       id: 2,
       name: "Song 2",
       artist: "Artist 2",
       album: "Album 2",
+      uri: 'spotify:track:2',
     },
     {
       id: 3,
       name: "Song 3",
       artist: "Artist 3",
       album: "Album 3",
+      uri: 'spotify:track:3',
     },
   ]);
 
@@ -43,6 +46,16 @@ function App() {
     setPlaylist(newPlaylist);
   }
 
+  const savePlaylist = () => {
+    // extract URIs from the playlist
+    const trackUris = playlist.map(track => track.uri);
+    console.log('Saving playlist to Spotify with URIs:', trackUris);
+
+    // Reset the playlist after saving
+    setPlaylist([]);
+    setPlaylistName('New Playlist');
+  }
+
   return (
     <div>
       <h1>Jammming</h1>
@@ -56,6 +69,7 @@ function App() {
         playlist={playlist}
         setPlaylistName={setPlaylistName}
         removeFromPlaylist={removeFromPlaylist}
+        savePlaylist={savePlaylist}
       />
     </div>
   );

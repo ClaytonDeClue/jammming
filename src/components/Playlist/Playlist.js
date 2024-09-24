@@ -3,7 +3,7 @@ import TrackList from "../TrackList/TrackList";
 import { FaEdit } from "react-icons/fa"; // Import an edit icon (you'll need react-icons package)
 import styles from "./Playlist.module.css"; // Import the CSS module
 
-function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist }) {
+function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist, savePlaylist }) {
   // Track if the user is editing the playlist name
   const [isEditing, setIsEditing] = useState(false);
 
@@ -32,7 +32,6 @@ function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist 
       ) : (
         <div
           className={styles.editableTitleContainer}
-          style={{ display: "flex", alignItems: "center", cursor: "pointer" }} //Flexbox for layout and pointer cursor
           onClick={() => setIsEditing(true)}
           title="Click to edit playlist name" //Tooltip on hover
         >
@@ -42,7 +41,7 @@ function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist 
       )}
 
       <TrackList tracks={playlist} showAddButton={false} removeFromPlaylist={removeFromPlaylist} />
-      <button>Save to Spotify</button>
+      <button onClick={savePlaylist}>Save to Spotify</button>
     </div>
   );
 }
