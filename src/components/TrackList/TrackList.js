@@ -1,7 +1,7 @@
 import React from "react";
 import Track from "../Track/Track";
 
-function TrackList({ tracks = [], addToPlaylist, showAddButton }) {
+function TrackList({ tracks = [], addToPlaylist, showAddButton, removeFromPlaylist }) {
   return (
     <div>
       {tracks.map((track) => (
@@ -10,6 +10,7 @@ function TrackList({ tracks = [], addToPlaylist, showAddButton }) {
           track={track}
           addToPlaylist={addToPlaylist}
           showAddButton={showAddButton}
+          removeFromPlaylist={removeFromPlaylist}
         />
       ))}
     </div>
