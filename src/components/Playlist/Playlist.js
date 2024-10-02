@@ -1,47 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import TrackList from "../TrackList/TrackList";
 import { FaEdit } from "react-icons/fa"; // Import an edit icon (you'll need react-icons package)
 import styles from "./Playlist.module.css"; // Import the CSS module
 
-function Playlist({ playlistName, playlist, setPlaylistName, removeFromPlaylist, savePlaylist }) {
+function Playlist({
+  playlistName,
+  playlist,
+  setPlaylistName,
+  removeFromPlaylist,
+  savePlaylist,
+}) {
   // Track if the user is editing the playlist name
   const [isEditing, setIsEditing] = useState(false);
 
-  // Handle input changes
-  const handleNameChange = (event) => {
-    setPlaylistName(event.target.value);
-  };
+  // Create a reference for the editable h2 element
+  const titleRef = useRef(null);
 
   //Handle when the user presses enter or clicks outside of the input
-  const handleBlurOrEnter = () => {
-    setIsEditing(false);
+  const handleBlurOrEnter = (event) => {
+    if (event.type === "blur" || event.key === "Enter") {
+      setIsEditing(false);
+      // Update State only after editing is done
+      setPlaylistName(event.target.innerText);
+    }
+  };
+
+  const enableEditing = () => {
+    setIsEditing(true);
+    setTimeout(() => {
+        titleRef.current.focus();
+    }, 0);
   };
 
   return (
-    <div>
-      {/* Display the playlist name as <h2> when not editing */}
-      {isEditing ? (
-        <input
-          type="text"
-          value={playlistName}
-          onChange={handleNameChange}
-          onBlur={handleBlurOrEnter}
-          onKeyDown={(e) => e.key === "Enter" && handleBlurOrEnter()} // When the user presses Enter
-          autoFocus
-        />
-      ) : (
-        <div
-          className={styles.editableTitleContainer}
-          onClick={() => setIsEditing(true)}
-          title="Click to edit playlist name" //Tooltip on hover
+    <div className={styles.playlistContainer}>
+      <div
+        className={styles.editableTitleContainer}
+        title="Click to edit playlist name" //Tooltip on hover
+      >
+        <h2
+          className={`${styles.editableTitle} ${isEditing ? styles.editableActive : ''}`}
+          contentEditable={isEditing} // Makes the h2 editable
+          suppressContentEditableWarning={true} // Prevent React warnings for contentEditable
+          onBlur={handleBlurOrEnter} // Exit editing mode on blur
+          onKeyDown={handleBlurOrEnter} // Exit editing mode on Enter key
+          onClick={enableEditing} // Enable editing on click
+          ref={titleRef} // Reference the h2 element
         >
-          <h2 className={styles.editableTitle}>{playlistName}</h2> {/* Click to edit Playlist name */}
-          <FaEdit className={styles.editIcon} /> {/* Edit Icon */}
-        </div>
-      )}
+          {playlistName}
+        </h2>
+        <FaEdit
+          className={styles.editIcon}
+          title="Click to edit playlist name"
+          onClick={enableEditing}
+        />
+      </div>
 
-      <TrackList tracks={playlist} showAddButton={false} removeFromPlaylist={removeFromPlaylist} />
-      <button onClick={savePlaylist}>Save to Spotify</button>
+      <div className={styles.trackListContainer}>
+        <TrackList
+          tracks={playlist}
+          showAddButton={false}
+          removeFromPlaylist={removeFromPlaylist}
+        />
+      </div>
+
+      <button className={styles.saveButton} onClick={savePlaylist}>
+        Save to Spotify
+      </button>
     </div>
   );
 }

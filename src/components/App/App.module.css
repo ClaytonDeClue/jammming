@@ -1,38 +1,60 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.appContainer {
+  background-color: black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('../../assets/images/background.webp');
+  background-size: cover;          /* Cover the entire viewport */
+  background-position: top;     /* Center the image */
+  background-repeat: no-repeat;    /* Prevent image repetition */
+  min-height: 100vh;               /* Make sure the container takes the full viewport height */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: flex-start;     /* Keep content at the top */
+  /* align-items: center;             /* Center content horizontally */
+  /* padding: 20px;                   /* Optional: Add padding to create space */
+}
+
+.banner {
+  width: 100%;
+  background-color: black;
   color: white;
+  text-align: center;
+  padding: 10px 0;
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Horizontally center the search bar */
+  justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchBarWrapper {
+  margin: 50px 0;           /* Adds space above and below the search bar */
+  text-align: center;       /* Ensure the search bar is centered */
+}
+
+.playlistResultContainer {
+  display: flex;                  /* Use flexbox to position children side by side */
+  justify-content: space-between; /* Ensure space between SearchResults and Playlist */
+  align-items: flex-start;        /* Align items at the top */
+  width: 60%;                     /* Take up 60% of the viewport width */
+  margin: 0 auto;                 /* Center the container horizontally */
+  margin-bottom: 40px;
+}
+
+.searchResults {
+  flex: 1;
+  margin-right: 80px;
+}
+
+.playlist {
+  flex: 1;
+}
+
+.coloredM {
+  color: rgba(80, 200, 255, 0.979);
+}
+
+h1 {
+  margin: 0;
 }
