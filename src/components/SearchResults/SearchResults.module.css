@@ -1,0 +1,9 @@
+.searchResultContainer {
+    background-color: rgba(135, 207, 241, 0.95);
+    padding: 5px 15px;
+    border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+}

@@ -4,13 +4,18 @@ import styles from "./Track.module.css";
 function Track({ track, addToPlaylist, showAddButton, removeFromPlaylist }) {
   return (
     <div className={styles.trackContainer}>
-      <p>
-        {track.name} - {track.artist} | {track.album}
+        <div className={styles.trackInfo}>
+        <p className={styles.trackName}>
+        {track.name} 
       </p>
+      <p className={styles.trackDetails}>{track.artist} | {track.album}</p>
+        </div>
+      
       {showAddButton ? (
         <button
           onClick={() => addToPlaylist(track)}
           className={styles.trackButton}
+          title="Add to Playlist"
         >
           +
         </button>
@@ -18,6 +23,7 @@ function Track({ track, addToPlaylist, showAddButton, removeFromPlaylist }) {
         <button
           onClick={() => removeFromPlaylist(track)}
           className={styles.trackButton}
+          title="Remove from Playlist"
         >
           -
         </button>

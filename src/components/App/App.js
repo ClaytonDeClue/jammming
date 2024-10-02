@@ -6,29 +6,7 @@ import Playlist from "../Playlist/Playlist";
 import Spotify from "../../utils/Spotify";
 
 function App() {
-  const [searchResults, setSearchResults] = useState([
-    {
-      id: 1,
-      name: "Song 1",
-      artist: "Artist 1",
-      album: "Album 1",
-      uri: "spotify:track:1",
-    },
-    {
-      id: 2,
-      name: "Song 2",
-      artist: "Artist 2",
-      album: "Album 2",
-      uri: "spotify:track:2",
-    },
-    {
-      id: 3,
-      name: "Song 3",
-      artist: "Artist 3",
-      album: "Album 3",
-      uri: "spotify:track:3",
-    },
-  ]);
+  const [searchResults, setSearchResults] = useState([]);
   const [playlistName, setPlaylistName] = useState("Playlist Name");
   const [playlist, setPlaylist] = useState([]);
 
@@ -62,21 +40,78 @@ function App() {
     setPlaylistName("New Playlist");
   };
 
+  const searchSpotify = async (searchTerm) => {
+    const accessToken = Spotify.getAccessToken();
+
+    if (!accessToken) {
+      console.error("No access token available!");
+      return;
+    }
+
+    // Make GET request to Spotify API
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(
+          searchTerm
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.tracks) {
+        const tracks = data.tracks.items.map((track) => ({
+          id: track.id,
+          name: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          uri: track.uri,
+        }));
+
+        setSearchResults(tracks); // Update the search results state
+      } else {
+        console.log("No tracks found!");
+      }
+    } catch (error) {
+      console.error("Error fetching data from Spotify API: ", error);
+    }
+  };
+
   return (
-    <div>
-      <h1>Jammming</h1>
-      <SearchBar />
-      <SearchResults
-        searchResults={searchResults}
-        addToPlaylist={addToPlaylist}
-      />
-      <Playlist
-        playlistName={playlistName}
-        playlist={playlist}
-        setPlaylistName={setPlaylistName}
-        removeFromPlaylist={removeFromPlaylist}
-        savePlaylist={savePlaylist}
-      />
+    <div className={styles.appContainer}>
+      <div className={styles.banner}>
+        <h1>
+          Ja<span className={styles.coloredM}>mmm</span>ing
+        </h1>
+      </div>
+      <div className={styles.container}>
+        <div className={styles.searchBarWrapper}>
+          <SearchBar onSearch={searchSpotify} />
+        </div>
+
+        <div className={styles.playlistResultContainer}>
+          <div className={styles.searchResults}>
+            <SearchResults
+              searchResults={searchResults}
+              addToPlaylist={addToPlaylist}
+            />
+          </div>
+
+          <div className={styles.playlist}>
+            <Playlist
+              playlistName={playlistName}
+              playlist={playlist}
+              setPlaylistName={setPlaylistName}
+              removeFromPlaylist={removeFromPlaylist}
+              savePlaylist={savePlaylist}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
