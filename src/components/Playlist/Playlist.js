@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import TrackList from "../TrackList/TrackList";
-import { FaEdit } from "react-icons/fa"; // Import an edit icon (you'll need react-icons package)
+import { FaEdit } from "react-icons/fa"; // Import an edit icon (need react-icons package)
 import styles from "./Playlist.module.css"; // Import the CSS module
 
 function Playlist({
@@ -12,6 +12,9 @@ function Playlist({
 }) {
   // Track if the user is editing the playlist name
   const [isEditing, setIsEditing] = useState(false);
+
+  // State to track whether the playlist is public or private
+  const [isPublic, setIsPublic] = useState(false); // Default: private playlist
 
   // Create a reference for the editable h2 element
   const titleRef = useRef(null);
@@ -28,8 +31,12 @@ function Playlist({
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
-        titleRef.current.focus();
+      titleRef.current.focus();
     }, 0);
+  };
+
+  const handleToggleChange = () => {
+    setIsPublic((prevState) => !prevState);
   };
 
   return (
@@ -39,7 +46,9 @@ function Playlist({
         title="Click to edit playlist name" //Tooltip on hover
       >
         <h2
-          className={`${styles.editableTitle} ${isEditing ? styles.editableActive : ''}`}
+          className={`${styles.editableTitle} ${
+            isEditing ? styles.editableActive : ""
+          }`}
           contentEditable={isEditing} // Makes the h2 editable
           suppressContentEditableWarning={true} // Prevent React warnings for contentEditable
           onBlur={handleBlurOrEnter} // Exit editing mode on blur
@@ -64,7 +73,17 @@ function Playlist({
         />
       </div>
 
-      <button className={styles.saveButton} onClick={savePlaylist}>
+      <div className={styles.toggleSwitch} title="Save Playlist as Either Public or Private">
+        <label className={styles.switch}>
+            <input type="checkbox" checked={isPublic} onChange={handleToggleChange}/>
+            <span className={styles.slider}>
+                <span className={`${styles.label} ${isPublic ? styles.active : ''}`}>Public</span>
+                <span className={`${styles.label} ${styles.private} ${!isPublic ? styles.active : ''}`}>Private</span>
+            </span>
+        </label>
+      </div>
+
+      <button className={styles.saveButton} onClick={() => savePlaylist(isPublic)} title="Save Playlist to Spotify Account">
         Save to Spotify
       </button>
     </div>
