@@ -7,7 +7,7 @@ import Spotify from "../../utils/Spotify";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [playlistName, setPlaylistName] = useState("Playlist Name");
+  const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
@@ -30,10 +30,12 @@ function App() {
     setPlaylist(newPlaylist);
   };
 
-  const savePlaylist = () => {
+  const savePlaylist = (isPublic) => {
     // extract URIs from the playlist
     const trackUris = playlist.map((track) => track.uri);
     console.log("Saving playlist to Spotify with URIs:", trackUris);
+
+    Spotify.savePlaylist(playlistName, trackUris, isPublic);
 
     // Reset the playlist after saving
     setPlaylist([]);
@@ -41,44 +43,8 @@ function App() {
   };
 
   const searchSpotify = async (searchTerm) => {
-    const accessToken = Spotify.getAccessToken();
-
-    if (!accessToken) {
-      console.error("No access token available!");
-      return;
-    }
-
-    // Make GET request to Spotify API
-    try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(
-          searchTerm
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.tracks) {
-        const tracks = data.tracks.items.map((track) => ({
-          id: track.id,
-          name: track.name,
-          artist: track.artists[0].name,
-          album: track.album.name,
-          uri: track.uri,
-        }));
-
-        setSearchResults(tracks); // Update the search results state
-      } else {
-        console.log("No tracks found!");
-      }
-    } catch (error) {
-      console.error("Error fetching data from Spotify API: ", error);
-    }
+    const tracks = await Spotify.searchTracks(searchTerm);
+    setSearchResults(tracks); // Update search results state
   };
 
   return (
