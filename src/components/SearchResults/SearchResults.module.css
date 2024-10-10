@@ -1,5 +1,5 @@
 .searchResultContainer {
-    background-color: rgba(135, 207, 241, 0.95);
+    background-color: var(--search-results-playlist-bg-color);
     padding: 5px 15px;
     border-radius: 10px;
 }

@@ -9,8 +9,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;     /* Keep content at the top */
-  /* align-items: center;             /* Center content horizontally */
-  /* padding: 20px;                   /* Optional: Add padding to create space */
 }
 
 .banner {
@@ -31,15 +29,16 @@
 .searchBarWrapper {
   margin: 50px 0;           /* Adds space above and below the search bar */
   text-align: center;       /* Ensure the search bar is centered */
+  width: 100%;
+  max-width: 300px;
 }
 
 .playlistResultContainer {
   display: flex;                  /* Use flexbox to position children side by side */
-  justify-content: space-between; /* Ensure space between SearchResults and Playlist */
+  justify-content: space-around;  /* Ensure space between SearchResults and Playlist */
   align-items: flex-start;        /* Align items at the top */
   width: 60%;                     /* Take up 60% of the viewport width */
-  margin: 0 auto;                 /* Center the container horizontally */
-  margin-bottom: 40px;
+  padding: 20px 0;
 }
 
 .searchResults {

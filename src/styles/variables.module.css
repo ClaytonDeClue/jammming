@@ -1,0 +1,11 @@
+:root {
+    --primary-color: rgb(21, 180, 253);
+    --hover-color: rgba(51, 135, 173, 0.979);
+    --border-color: #868686;
+    --track-border-color: #535353;
+    --text-color: #313131;
+    --slider-bg-color: rgba(75, 155, 177, 0.979);
+    --search-results-playlist-bg-color: rgba(135, 207, 241, 0.95);
+    --button-radius: 20px;
+    --input-height: 35px;
+  }

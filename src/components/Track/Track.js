@@ -1,35 +1,30 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./Track.module.css";
 
 function Track({ track, addToPlaylist, showAddButton, removeFromPlaylist }) {
+  const buttonLabel = showAddButton ? "+" : "-";
+  const onClickHandler = useCallback(() => {
+    showAddButton ? addToPlaylist(track) : removeFromPlaylist(track);
+  }, [track, addToPlaylist, removeFromPlaylist, showAddButton]);
+
   return (
     <div className={styles.trackContainer}>
-        <div className={styles.trackInfo}>
-        <p className={styles.trackName}>
-        {track.name} 
-      </p>
-      <p className={styles.trackDetails}>{track.artist} | {track.album}</p>
-        </div>
-      
-      {showAddButton ? (
-        <button
-          onClick={() => addToPlaylist(track)}
-          className={styles.trackButton}
-          title="Add to Playlist"
-        >
-          +
-        </button>
-      ) : (
-        <button
-          onClick={() => removeFromPlaylist(track)}
-          className={styles.trackButton}
-          title="Remove from Playlist"
-        >
-          -
-        </button>
-      )}
+      <div className={styles.trackInfo}>
+        <p className={styles.trackName}>{track.name}</p>
+        <p className={styles.trackDetails}>
+          {track.artist} | {track.album}
+        </p>
+      </div>
+
+      <button
+        onClick={onClickHandler}
+        className={styles.trackButton}
+        title={showAddButton ? "Add to Playlist" : "Remove from Playlist"}
+      >
+        {buttonLabel}
+      </button>
     </div>
   );
 }
 
-export default Track;
+export default React.memo(Track);

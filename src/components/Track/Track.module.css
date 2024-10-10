@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #535353;
+    border-bottom: 1px solid var(--track-border-color);
 }
 
 .trackInfo {
@@ -19,7 +19,7 @@
 .trackDetails {
     margin-bottom: 5px;
     margin-top: 0;
-    color: #313131;
+    color: var(--text-color);
 }
 
 .trackButton {
@@ -31,9 +31,10 @@
     cursor: pointer;
     font-size: 20px;
     width: 25px;
+    transition: background-color 0.2s ease, border-radius 0.2s ease;
 }
 
 .trackButton:hover {
-    background-color: rgba(51, 135, 173, 0.979);
+    background-color: var(--hover-color);
     border-radius: 5px;
 }

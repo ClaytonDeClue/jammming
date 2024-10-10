@@ -1,5 +1,6 @@
+import '../../styles/variables.module.css'
 import styles from "./App.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
@@ -15,22 +16,22 @@ function App() {
     Spotify.getAccessToken();
   }, []);
 
-  const addToPlaylist = (track) => {
-    if (playlist.find((savedTrack) => savedTrack.id === track.id)) {
-      return;
+  const addToPlaylist = useCallback((track) => {
+    const trackSet = new Set(playlist.map((track) => track.id));
+    if (!trackSet.has(track.id)) {
+      setPlaylist([...playlist, track]);
     }
-    setPlaylist([...playlist, track]);
-  };
+  }, [playlist]);
 
-  const removeFromPlaylist = (track) => {
+  const removeFromPlaylist = useCallback((track) => {
     const newPlaylist = playlist.filter(
       (savedTrack) => savedTrack.id !== track.id
     );
 
     setPlaylist(newPlaylist);
-  };
+  }, [playlist]);
 
-  const savePlaylist = (isPublic) => {
+  const savePlaylist = useCallback((isPublic) => {
     // extract URIs from the playlist
     const trackUris = playlist.map((track) => track.uri);
     console.log("Saving playlist to Spotify with URIs:", trackUris);
@@ -40,11 +41,15 @@ function App() {
     // Reset the playlist after saving
     setPlaylist([]);
     setPlaylistName("New Playlist");
-  };
+  }, [playlist, playlistName]);
 
   const searchSpotify = async (searchTerm) => {
-    const tracks = await Spotify.searchTracks(searchTerm);
-    setSearchResults(tracks); // Update search results state
+    try {
+      const tracks = await Spotify.searchTracks(searchTerm);
+      setSearchResults(tracks); // Update search results state
+    } catch (error) {
+      console.error("Error fetching tracks: ", error);
+    }
   };
 
   return (
