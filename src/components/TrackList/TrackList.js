@@ -1,7 +1,12 @@
 import React from "react";
 import Track from "../Track/Track";
 
-function TrackList({ tracks = [], addToPlaylist, showAddButton, removeFromPlaylist }) {
+function TrackList({
+  tracks = [],
+  addToPlaylist,
+  showAddButton,
+  removeFromPlaylist,
+}) {
   return (
     <div>
       {tracks.map((track) => (
@@ -17,4 +22,4 @@ function TrackList({ tracks = [], addToPlaylist, showAddButton, removeFromPlayli
   );
 }
 
-export default TrackList;
+export default React.memo(TrackList);

@@ -4,6 +4,13 @@ let accessToken;
 let expiresIn;
 
 const Spotify = {
+  // Helper function to clear token and update URL
+  clearToken(expiresIn) {
+    window.setTimeout(() => (accessToken = ""), expiresIn * 1000); // setTimeout schedules a function to run after a certain amount of time.
+    // Clear the access token and expiration time from the URL without reloading the page.
+    window.history.pushState("Access Token", null, "/"); // Replaces the current URL with just '/', removing any sensitive information from the URL after it has been extracted.
+  },
+
   // Function to get the accessToken for current user
   getAccessToken() {
     if (accessToken) {
@@ -21,10 +28,7 @@ const Spotify = {
       accessToken = tokenMatch[1];
       expiresIn = Number(expiresInMatch[1]); // convert expires_in to number, value is given in seconds
 
-      // Clear the access token after amount of time stored in expiresIn has passed.
-      window.setTimeout(() => (accessToken = ""), expiresIn * 1000); // setTimeout schedules a function to run after a certain amount of time.
-      // Clear the access token and expiration time from the URL without reloading the page.
-      window.history.pushState("Access Token", null, "/"); // Replaces the current URL with just '/', removing any sensitive information from the URL after it has been extracted.
+      this.clearToken(expiresIn);
 
       return accessToken;
     }
@@ -149,7 +153,11 @@ const Spotify = {
       const userId = await this.getCurrentUserId();
 
       // Step 2: Create a new playlist
-      const playlistId = await this.createNewPlaylist(userId, playlistName, isPublic);
+      const playlistId = await this.createNewPlaylist(
+        userId,
+        playlistName,
+        isPublic
+      );
 
       // Step 3: Add tracks to the new playlist
       await this.addTracksToPlaylist(playlistId, trackUris);

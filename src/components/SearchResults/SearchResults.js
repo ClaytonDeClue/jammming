@@ -15,4 +15,4 @@ function SearchResults({ searchResults, addToPlaylist }) {
   );
 }
 
-export default SearchResults;
+export default React.memo(SearchResults);
