@@ -4,6 +4,20 @@ let accessToken;
 let expiresIn;
 
 const Spotify = {
+
+  setAccessToken(token) {
+    accessToken = token;  // Controlled modification
+  },
+  getAccessTokenValue() {
+    return accessToken;  // Controlled access
+  },
+  setExpiresIn(time) {
+    expiresIn = time;
+  },
+  getExpiresIn(time) {
+    return expiresIn;
+  },
+
   // Helper function to clear token and update URL
   clearToken(expiresIn) {
     window.setTimeout(() => (accessToken = ""), expiresIn * 1000); // setTimeout schedules a function to run after a certain amount of time.
@@ -42,7 +56,7 @@ const Spotify = {
 
       // By setting window.location, the browser navigates to the specified URL, which initiates the Spotify login and authorization process.
       // After the user authorizes the app, they will be redirected back to the app with the access token in the URL.
-      window.location = accessUrl;
+      window.location.assign(accessUrl);
     }
   },
 
