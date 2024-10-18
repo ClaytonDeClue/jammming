@@ -101,6 +101,9 @@ describe("App Integration Tests", () => {
       within(playlistContainer).getByTitle("Remove from Playlist")
     ).toBeInTheDocument();
 
+    // Verify that the track was removed from the search results
+    expect(within(searchResultsContainer).queryByText("Track 1")).not.toBeInTheDocument();
+
     // Remove the track from the playlist
     const removeTrackButton = within(playlistContainer).getByTitle(
       "Remove from Playlist"
@@ -111,6 +114,9 @@ describe("App Integration Tests", () => {
     expect(
       within(playlistContainer).queryByText("Track 1")
     ).not.toBeInTheDocument();
+
+    // Verify that the track was added back to the search results
+    expect(within(searchResultsContainer).getByText("Track 1")).toBeInTheDocument();
   });
 
   test("toggles between public and private playlists", () => {

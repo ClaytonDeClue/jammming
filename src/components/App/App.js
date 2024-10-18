@@ -20,6 +20,9 @@ function App() {
     const trackSet = new Set(playlist.map((track) => track.id));
     if (!trackSet.has(track.id)) {
       setPlaylist([...playlist, track]);
+      setSearchResults((prevSearchResults) => 
+        prevSearchResults.filter((resultTrack) => resultTrack.id !== track.id)
+      );
     }
   }, [playlist]);
 
@@ -29,6 +32,7 @@ function App() {
     );
 
     setPlaylist(newPlaylist);
+    setSearchResults((prevSearchResults) => [track, ...prevSearchResults]);
   }, [playlist]);
 
   const savePlaylist = useCallback((isPublic) => {
