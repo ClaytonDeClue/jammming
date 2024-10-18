@@ -65,14 +65,14 @@ function App() {
         </div>
 
         <div className={styles.playlistResultContainer}>
-          <div className={styles.searchResults}>
+          <div className={styles.searchResults} role='region' aria-label='Search Results'>
             <SearchResults
               searchResults={searchResults}
               addToPlaylist={addToPlaylist}
             />
           </div>
 
-          <div className={styles.playlist}>
+          <div className={styles.playlist} role='region' aria-label='New Playlist'>
             <Playlist
               playlistName={playlistName}
               playlist={playlist}
