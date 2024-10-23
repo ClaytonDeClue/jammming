@@ -1,0 +1,18 @@
+.roundedButton {
+    background-color: var(--primary-color);
+    color: black;
+    font-weight: bold;
+    width: 120px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+}
+
+.roundedButton:hover {
+    background-color: var(--hover-color);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}

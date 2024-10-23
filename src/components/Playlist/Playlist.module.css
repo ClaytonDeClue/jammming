@@ -1,0 +1,120 @@
+.playlistContainer {
+    background-color: var(--search-results-playlist-bg-color);
+    padding: 5px 15px;
+    border-radius: 10px;
+    display: flex;                /* Use Flexbox for centering */
+    flex-direction: column;       /* Align elements in a column */
+    justify-content: center;      /* Vertically center */
+    align-items: center;          /* Horizontally center */
+    height: 100%;                 /* Take up full height */
+}
+
+.editableTitleContainer {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.editableTitleContainer:hover {
+    text-decoration: underline;
+}
+
+.editableTitle {
+    margin-right: 10px;
+}
+
+.editableActive {
+    outline: none;
+    border: none;
+    caret-color: black;
+}
+
+.editIcon {
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+}
+
+.trackListContainer {
+    width: 100%;                  /* Take full width for the tracklist */
+    text-align: left;             /* Left-align the track list */
+}
+
+.saveButton {
+    margin: 20px 0px;
+}
+
+/* Slider Container */
+.toggleSwitch {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color: white;
+    transition: background-color 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 60px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+/* Handle when the toggle is active (checked) */
+input:checked + .slider {
+    background-color: var(--slider-bg-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(70px);
+}
+
+.label {
+    position: relative;
+    z-index: 1;
+    visibility: hidden;
+    transition: visibility 0.1s;
+}
+
+.label.private {
+    color: black; /* Private label will always be black when active */
+  }
+
+.active {
+    visibility: visible;
+}

@@ -1,0 +1,9 @@
+.searchResultContainer {
+    background-color: var(--search-results-playlist-bg-color);
+    padding: 5px 15px;
+    border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+}

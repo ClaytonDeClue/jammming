@@ -1,0 +1,120 @@
+import React, { useState, useRef, useCallback } from "react";
+import TrackList from "../TrackList/TrackList";
+import { FaEdit } from "react-icons/fa"; // Import an edit icon (need react-icons package)
+import styles from "./Playlist.module.css"; // Import the CSS module
+import sharedStyles from "../../styles/shared.module.css";
+
+const Playlist = React.memo(
+  ({
+    playlistName,
+    playlist,
+    setPlaylistName,
+    removeFromPlaylist,
+    savePlaylist,
+  }) => {
+    // Track if the user is editing the playlist name
+    const [isEditing, setIsEditing] = useState(false);
+
+    // State to track whether the playlist is public or private
+    const [isPublic, setIsPublic] = useState(false); // Default: private playlist
+
+    // Create a reference for the editable h2 element
+    const titleRef = useRef(null);
+
+    //Handle when the user presses enter or clicks outside of the input
+    const handleBlurOrEnter = useCallback(
+      (event) => {
+        if (event.type === "blur" || event.key === "Enter") {
+          setIsEditing(false);
+          // Update State only after editing is done
+          setPlaylistName(event.target.innerText);
+        }
+      },
+      [setPlaylistName]
+    );
+
+    const enableEditing = useCallback(() => {
+      setIsEditing(true);
+      setTimeout(() => {
+        titleRef.current.focus();
+      }, 0);
+    }, []);
+
+    const handleToggleChange = useCallback(() => {
+      setIsPublic((prevState) => !prevState);
+    }, []);
+
+    return (
+      <div className={styles.playlistContainer}>
+        <div
+          className={styles.editableTitleContainer}
+          title="Click to edit playlist name" //Tooltip on hover
+        >
+          <h2
+            className={`${styles.editableTitle} ${
+              isEditing ? styles.editableActive : ""
+            }`}
+            contentEditable={isEditing} // Makes the h2 editable
+            suppressContentEditableWarning={true} // Prevent React warnings for contentEditable
+            onBlur={handleBlurOrEnter} // Exit editing mode on blur
+            onKeyDown={handleBlurOrEnter} // Exit editing mode on Enter key
+            onClick={enableEditing} // Enable editing on click
+            ref={titleRef} // Reference the h2 element
+          >
+            {playlistName}
+          </h2>
+          <FaEdit
+            className={styles.editIcon}
+            title="Click to edit playlist name"
+            onClick={enableEditing}
+          />
+        </div>
+
+        <div className={styles.trackListContainer}>
+          <TrackList
+            tracks={playlist}
+            showAddButton={false}
+            removeFromPlaylist={removeFromPlaylist}
+          />
+        </div>
+
+        <div
+          className={styles.toggleSwitch}
+          title="Save Playlist as Either Public or Private"
+        >
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              checked={isPublic}
+              onChange={handleToggleChange}
+            />
+            <span className={styles.slider}>
+              <span
+                className={`${styles.label} ${isPublic ? styles.active : ""}`}
+              >
+                Public
+              </span>
+              <span
+                className={`${styles.label} ${styles.private} ${
+                  !isPublic ? styles.active : ""
+                }`}
+              >
+                Private
+              </span>
+            </span>
+          </label>
+        </div>
+
+        <button
+          className={`${styles.saveButton} ${sharedStyles.roundedButton}`}
+          onClick={() => savePlaylist(isPublic)}
+          title="Save Playlist to Spotify Account"
+        >
+          Save to Spotify
+        </button>
+      </div>
+    );
+  }
+);
+
+export default Playlist;

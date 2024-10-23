@@ -1,0 +1,59 @@
+.appContainer {
+  background-color: black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('../../assets/images/background.webp');
+  background-size: cover;          /* Cover the entire viewport */
+  background-position: top;     /* Center the image */
+  background-repeat: no-repeat;    /* Prevent image repetition */
+  min-height: 100vh;               /* Make sure the container takes the full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;     /* Keep content at the top */
+}
+
+.banner {
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Horizontally center the search bar */
+  justify-content: space-between;
+}
+
+.searchBarWrapper {
+  margin: 50px 0;           /* Adds space above and below the search bar */
+  text-align: center;       /* Ensure the search bar is centered */
+  width: 100%;
+  max-width: 300px;
+}
+
+.playlistResultContainer {
+  display: flex;                  /* Use flexbox to position children side by side */
+  justify-content: space-around;  /* Ensure space between SearchResults and Playlist */
+  align-items: flex-start;        /* Align items at the top */
+  width: 60%;                     /* Take up 60% of the viewport width */
+  padding: 20px 0;
+}
+
+.searchResults {
+  flex: 1;
+  margin-right: 80px;
+}
+
+.playlist {
+  flex: 1;
+}
+
+.coloredM {
+  color: rgba(80, 200, 255, 0.979);
+}
+
+h1 {
+  margin: 0;
+}
